@@ -4,12 +4,15 @@ import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
 import static com.example.lambda.advance.Apple.Color.GREEN;
 import static com.example.lambda.advance.Apple.Color.RED;
 import static com.example.lambda.advance.Book.Genre.*;
+import static com.example.lambda.advance.FilteringApple.*;
+import static java.util.Comparator.*;
 
 class FilteringAppleTest {
     @Test
@@ -29,7 +32,7 @@ class FilteringAppleTest {
 //        List<Apple> list = FilteringApple.filterApplesByColor(inventory, RED);
 
         // 필터 조건을 지정
-        List<Apple> list = FilteringApple.filterApples(inventory, apple -> apple.getWeight() > 100 && apple.getColor() == RED);
+        List<Apple> list = filterApples(inventory, apple -> apple.getWeight() > 100 && apple.getColor() == RED);
 
         for (Apple apple : list) {
             System.out.println(apple);
@@ -47,15 +50,15 @@ class FilteringAppleTest {
                         , new Book(13000, COMICS)
                 )
         );
-        List<Book> books = FilteringApple.filter(bookList, b -> b.getGenre() == COMICS);
-        List<Apple> apples = FilteringApple.filter(inventory, a -> a.getWeight() < 100);
+        List<Book> books = filter(bookList, b -> b.getGenre() == COMICS);
+        List<Apple> apples = filter(inventory, a -> a.getWeight() < 100);
 
 
         // 정수 리스트
         List<Integer> numbers = Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 9, 10);
 
         // 홀수만 필터링
-        List<Integer> integers = FilteringApple.filter(numbers, n -> n % 3 == 0);
+        List<Integer> integers = filter(numbers, n -> n % 3 == 0);
         for (Integer n : integers) {
             System.out.println(n);
         }
@@ -64,5 +67,24 @@ class FilteringAppleTest {
                 .filter(n -> n % 2 == 0)
                 .collect(Collectors.toList());
         System.out.println(integerList);
+    }
+
+    @Test
+    void sortTest() {
+        List<Apple> inventory = new ArrayList<>();
+        inventory.add(new Apple(80, GREEN));
+        inventory.add(new Apple(155, GREEN));
+        inventory.add(new Apple(120, RED));
+        inventory.add(new Apple(90, GREEN));
+        inventory.add(new Apple(110, RED));
+        inventory.add(new Apple(50, RED));
+
+        // 무게 오름차수 정렬
+        inventory.sort(comparing(Apple::getWeight));
+
+        // 무게 내림차수 정렬
+        inventory.sort(comparing(Apple::getWeight).reversed());
+
+        inventory.forEach(System.out::println);
     }
 }

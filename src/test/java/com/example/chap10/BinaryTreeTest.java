@@ -7,7 +7,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class BinaryTreeTest {
 
     @Test
-    void traverse(){
+    void traverse() {
         BinaryTree tree = new BinaryTree();
 
         /*
@@ -35,6 +35,22 @@ class BinaryTreeTest {
         tree.inOrder(tree.getRoot());
         System.out.println();
         tree.postOrder(tree.getRoot());
+
+        // 트리 출력
+        System.out.println("\n=============== 트리 출력 =============");
+        tree.display();
+        tree.delete(27);
+        tree.display();
+
+        System.out.println("\n=============== 이진트리의 문제점 =============");
+        BinaryTree tree2 = new BinaryTree();
+        tree2.add(50);
+        tree2.add(40);
+        tree2.add(30);
+        tree2.add(20);
+
+        tree2.display();
     }
+
 
 }
